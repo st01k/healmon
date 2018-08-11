@@ -39,7 +39,7 @@ $("#btnEnter").click(function () {
           }).fail(function (error) {
           alert(error.responseText);
         })
-      }
+      } 
 			else {
         alert('An error occurred logging user in.');
       }
@@ -57,7 +57,8 @@ $("#noticeYes").click(function () {
   user.password = sessionStorage.password;
   $.post(SERVER_URL + '/updateUser', user,
     function (data) {
-      sessionStorage.user = JSON.stringify(user);
+      sessionStorage.user = JSON.stringify(
+        user);
       return $.mobile.changePage(
         "#pageMenu");
     }).fail(function (error) {

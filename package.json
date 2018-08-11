@@ -1,20 +1,20 @@
 {
-  "name": "assignment10-ch11",
+  "name": "ch9",
   "version": "1.0.0",
-  "description": "api integration",
-  "main": "server.js",
+  "description": "mobile apps - mongodb",
+  "main": "app-server.js",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "console-stamp": "^0.2.5",
+    "express": "^4.15.2",
+    "mysql": "^2.13.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "Casey J. Murphy",
-  "license": "ISC",
-  "dependencies": {
-    "async": "^2.3.0",
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.17.1",
-    "console-stamp": "^0.2.5",
-    "express": "^4.15.2",
-    "mongodb": "^2.2.25"
-  }
+  "license": "ISC"
 }

@@ -1,4 +1,4 @@
-<!-- Murphy - CS321 Mobile Apps (S17) - Lesson 10 - Chapter 11 -->
+<!-- Murphy - CS321 Mobile Apps (S17) - Lesson 7 - Chapter 8 -->
 
 <!DOCTYPE html>
 
@@ -22,7 +22,6 @@
 </head>
 
 <body>
-    <div style="text-align:center;"><img id="loading" src="assets/libs/images/ajax-loader.gif" alt="" /></div>
     <!-- Login Page -->
     <div data-role="page" data-theme="b" id="pageHome">
         <div data-role="header">
@@ -189,22 +188,6 @@
                 <div data-role="ui-field-contain">
                     <label for="txtLastName"></label>
                     <input type="text" placeholder="Last Name" name="txtLastName" data-mini="false" id="txtLastName" value="" required>
-                </div>
-                <div data-role="ui-field-contain">
-                    <label for="txtAddress">Address: </label>
-                    <input type="text" placeholder="Address" name="txtAddress" data-mini="false" id="txtAddress" value="" required>
-                </div>
-                <div data-role="ui-field-contain">
-                    <label for="txtCity"></label>
-                    <input type="text" placeholder="City" name="txtCity" data-mini="false" id="txtCity" value="" required>
-                </div>
-                <div data-role="ui-field-contain">
-                    <label for="txtState"></label>
-                    <input type="text" placeholder="State" name="txtState" data-mini="false" id="txtState" value="" required>
-                </div>
-                <div data-role="ui-field-contain">
-                    <label for="txtZip"></label>
-                    <input type="text" placeholder="Zip Code" name="txtZip" data-mini="false" id="txtZip" value="" required>
                 </div>
                 <div data-role="ui-field-contain">
                     <label for="datBirthdate">Date of Birth: </label>
@@ -485,7 +468,6 @@
         </div>
     </div>
 
-     <!-- Sync Page  -->
     <div data-role="page" data-theme="b" id="pageSync">
         <div data-role="header">
             <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
@@ -505,14 +487,9 @@
     <div data-role="page" data-theme="b" id="pageDialog" data-dialog="true" data-close-btn="none">
         <div class="panel">
             <div class="panel-heading">Are you sure? </div>
-            <a href="#pageHome" data-role="button" data-transition="flip" onclick="delUser()">Yes</a>
-            <a href="#pageUserInfo" data-role="button" data-transition="flip">No</a>
+            <a href="#pageHome" data-role="button" onclick="delUser()">Yes</a>
+            <a href="#pageUserInfo" data-role="button">No</a>
         </div>
-    </div>
-
-     <!-- Map Page  -->
-    <div data-role="page" data-theme="b" id="pageMap">
-      
     </div>
 
 

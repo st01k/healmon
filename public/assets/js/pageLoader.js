@@ -1,5 +1,4 @@
-// var SERVER_URL = "http://54.186.23.253:25923";
-var SERVER_URL = "http://127.0.0.1:25923";
+var SERVER_URL = "http://54.186.23.253:25921";
 
 $(document).on("pagecontainershow", function() {
 
@@ -15,17 +14,15 @@ $(document).on("pagecontainershow", function() {
 			break;
 
 		case "pageUserInfo" :
-
+			showUserForm();
 			var user = sessionStorage.user;
 			var button = $("#menuButton");
 			if (user == null) {
-				// clear form
 				button.text("Back");
 				button.attr("href", "#pageHome");
 				button.attr("data-icon", "arrow-l");
 			}
 			else {
-				showUserForm();
 				button.text("Menu");
 				button.attr("href", "#pageMenu");
 				button.attr("data-icon", "bars");
@@ -106,7 +103,6 @@ function loadUserInfo() {
 
 		$("#divUserSection").append("<strong>" + user.firstName + " " + user.lastName + "</strong><br>");
 		$("#divUserSection").append("Age: " + age + "<br>");
-		$("#divUserSection").append("Locale: " + user.city + ", " + user.state + "<br>");
 		$("#divUserSection").append("Ht: " + user.heightFt + "' " + user.heightIn + "\"<br>");
 		$("#divUserSection").append("Insurance: " + user.insName + "<br>");
 		$("#divUserSection").append("Policy Number: " + user.policyID + "<br>");
@@ -116,11 +112,3 @@ function loadUserInfo() {
 		$('#btnProfile').button();
 	}
 }
-
-$(document).ajaxStart(function() {
-    $("#loading").show();
-});
-
-$(document).ajaxStop(function() {
-    $("#loading").hide();
-});
