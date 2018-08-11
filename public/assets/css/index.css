@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+body {
+  font-family:  "Montserrat", sans-serif !important;
+}
+
+.ui-btn {
+  font-family:  "Montserrat", sans-serif;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+div {
+  background-color: #444;
+  color: #ccc;
+  padding: 5px;
+  text-shadow: none;
+}
+
+h1 {
+  text-align: center;
+}
+
+img {
+  border-radius: 10px;
+  margin: auto;
+}
+
+.graphCanvas {
+  border-radius: 10px;
+  /*box-shadow: 0px 0px 50px -10px rgba(0,0,0,0.75);*/
+  width: 550px;
+}
+
+#AdviceCanvas {
+  height: 500px;
+}
+
+#GraphCanvasBmi {
+  height: 300px;
+}
+
+#GraphCanvasBp {
+  height: 300px;
+}
+
+#gender .ui-radio {
+  padding: 1px;
+}
+
+.sbsDiv .sideByside .ui-block-a {
+  padding-right: 3px;
+}
+
+.sbsDiv .sideByside .ui-block-b {
+  padding-left: 3px;
+}
+
+#numKeyPad .ui-controlgroup-controls {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.ui-overlay-a,
+.ui-page-theme-a,
+.ui-page-theme-a .ui-panel-wrapper {
+    background-color: #1e1e1e !important;
+}
+
+#btnDelUser,
+#btnClearHistory {
+  color: #f56300;
+}
+
+#tblBpInfo td {
+  padding-right: 15px;
+  padding-left: 15px;
+  text-align: center;
+  font-size: 12px;
+}
+
+#tblBpInfo th {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}

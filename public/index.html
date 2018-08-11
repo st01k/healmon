@@ -1,0 +1,539 @@
+<!-- Murphy - CS321 Mobile Apps (S17) - Lesson 10 - Chapter 11 -->
+
+<!DOCTYPE html>
+
+<html lang=en>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <title>Murphy - 9 - Health App</title>
+
+    <!-- JS -->
+    <script src="assets/libs/jquery-1.12.4.js"></script>
+    <script src="assets/libs/jquery.mobile-1.4.5.js"></script>
+    <script src="assets/js/chromeFileProtocolFix.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/libs/jquery.mobile-1.4.5.min.css" />
+    <link rel="stylesheet" href="assets/css/index.css">
+
+</head>
+
+<body>
+    <div style="text-align:center;"><img id="loading" src="assets/libs/images/ajax-loader.gif" alt="" /></div>
+    <!-- Login Page -->
+    <div data-role="page" data-theme="b" id="pageHome">
+        <div data-role="header">
+            <h1>HealMon</h1>
+        </div>
+        <div data-role="content">
+            Email: <input type="email" id="email" placeholder="name@example.com"> Password: <input type="password" id="passcode" placeholder="Password">
+
+            <fieldset class="ui-grid-a sideByside">
+                <div class="ui-block-a">
+                    <div data-role="controlgroup" data-type="horizontal" class="numKeyPad">
+                        <a data-role="button" onclick="addValueToPassword(7)">7</a>
+                        <a data-role="button" onclick="addValueToPassword(8)">8</a>
+                        <a data-role="button" onclick="addValueToPassword(9)">9</a>
+                    </div>
+                    <div data-role="controlgroup" data-type="horizontal" class="numKeyPad">
+                        <a data-role="button" onclick="addValueToPassword(4)">4</a>
+                        <a data-role="button" onclick="addValueToPassword(5)">5</a>
+                        <a data-role="button" onclick="addValueToPassword(6)">6</a>
+                    </div>
+                    <div data-role="controlgroup" data-type="horizontal" class="numKeyPad">
+                        <a data-role="button" onclick="addValueToPassword(1)">1&nbsp</a>
+                        <a data-role="button" onclick="addValueToPassword(2)">2</a>
+                        <a data-role="button" onclick="addValueToPassword(3)">3</a>
+                    </div>
+                    <div data-role="controlgroup" data-type="horizontal" class="numKeyPad">
+                        <a data-role="button" onclick="addValueToPassword(0)">0</a>
+                    </div>
+                </div>
+                <div class="ui-block-b">
+                    <div data-role="controlgroup">
+                        <a data-role="button" id="btnEnter" type="submit" data-icon="arrow-r">Enter</a>
+                        <a data-role="button" onclick="addValueToPassword('bksp')" data-icon="arrow-l">&nbspBack</a>
+                        <a data-role="button" onclick="addValueToPassword('reset')" data-icon="refresh">&nbspReset</a>
+                        <a href="#pageAbout" data-role="button" data-icon="info">Info</a>
+                        <a href="#pageUserInfo" data-role="button" id="#btnCreateUser" data-icon="user">New User</a>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+    <!-- Disclaimer Page -->
+    <div data-role="page" data-theme="b" id="legalNotice" data-close-btn="none">
+        <div data-role="header">
+            <h1>Disclaimer</h1>
+        </div>
+        <div data-role="content">
+            <p>
+                This app was made for educational purposes. The logic was derived from information obtained via Google. The author is not a medical expert and is not liable for any harm done as a result of consulting information obtained herein.
+            </p>
+            <p>You must agree to proceed.</p>
+            <br>
+            <a href="#pageUserInfo" id="noticeYes" data-role="button" class="ui-btn ui-icon-arrow-r ui-btn-icon-left" data-mini="false">Agree</a>
+        </div>
+    </div>
+
+    <!-- Info Page -->
+    <div data-role="page" data-theme="b" id="pageAbout">
+        <div data-role="header">
+            <a href="#pageHome" data-role="button" id="btnHome" data-icon="bars" data-iconpos="left">Home</a>
+            <h1>Info</h1>
+        </div>
+        <div data-role="content">
+            <p>
+                HealMon tracks the user's Body-Mass Index (BMI) and Blood Pressure over time. The information collected is used to graph health trends and offer advice based on the data.
+            </p>
+            <hr>
+            <div data-role="collapsible">
+                <h3>BMI</h3>
+                <p><strong>Calculated by:</strong>
+                    <br><br>
+                    <img src="assets/media/bmiformula-imperial.png" width="340" height="100" alt="BMI Formula">
+                    <br><br>
+                </p>
+                <p><strong>Categories:</strong></p>
+                <p>Underweight =
+                    < 18.5 %</p>
+                        <p>Normal Weight = 18.6 - 24.9 %</p>
+                        <p>Overweight = 25 - 29.9 %</p>
+                        <p>Obesity = > 30 %</p>
+            </div>
+            <div data-role="collapsible">
+                <h3>Blood Pressure</h3>
+                <table id="tblBpInfo">
+                    <thead>
+                        <tr>
+                            <th>Systolic</th>
+                            <th>Diastolic</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <p>
+                                    < 120</p>
+                            </td>
+                            <td>
+                                <p>
+                                    < 80</p>
+                            </td>
+                            <td>
+                                <p>Normal</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>120 - 139</p>
+                            </td>
+                            <td>
+                                <p>80 - 89</p>
+                            </td>
+                            <td>
+                                <p>Prehypertension</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>140 - 159</p>
+                            </td>
+                            <td>
+                                <p>90 - 99</p>
+                            </td>
+                            <td>
+                                <p>Stage 1 Hypertension</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p>> 160</p>
+                            </td>
+                            <td>
+                                <p>>100</p>
+                            </td>
+                            <td>
+                                <p>Stage 2 Hypertension</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Info Page/Form -->
+    <div data-role="page" data-theme="b" id="pageUserInfo">
+        <div data-role="header">
+            <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true" id="menuButton">Menu</a>
+            <a href="#pageAbout" data-role="button" data-icon="info" data-iconpos="right" data-inline="true">Info</a>
+            <h1>User Info</h1>
+        </div>
+
+        <div data-role="content">
+            <form id="frmUserForm" action="">
+                <div data-role="ui-field-contain">
+                    <label for="txtEmail">Email: </label>
+                    <input type="email" placeholder="name@example.com" name="txtEmail" data-mini="false" id="txtEmail" value="" required>
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="txtFirstName">Name: </label>
+                    <input type="text" placeholder="First Name" name="txtFirstName" data-mini="false" id="txtFirstName" value="" required>
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="txtLastName"></label>
+                    <input type="text" placeholder="Last Name" name="txtLastName" data-mini="false" id="txtLastName" value="" required>
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="txtAddress">Address: </label>
+                    <input type="text" placeholder="Address" name="txtAddress" data-mini="false" id="txtAddress" value="" required>
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="txtCity"></label>
+                    <input type="text" placeholder="City" name="txtCity" data-mini="false" id="txtCity" value="" required>
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="txtState"></label>
+                    <input type="text" placeholder="State" name="txtState" data-mini="false" id="txtState" value="" required>
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="txtZip"></label>
+                    <input type="text" placeholder="Zip Code" name="txtZip" data-mini="false" id="txtZip" value="" required>
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="datBirthdate">Date of Birth: </label>
+                    <input type="date" name="datBirthdate" data-mini="false" id="datBirthdate" value="" required>
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="insuranceName">Health Insurance: </label>
+                    <input type="text" placeholder="Company Name" name="insuranceName" data-mini="false" id="insuranceName" value="">
+                </div>
+                <div data-role="ui-field-contain">
+                    <label for="policyNum"></label>
+                    <input type="text" placeholder="Policy Number" name="policyNum" data-mini="false" id="policyNum" value="">
+                </div>
+                <div data-role="ui-field-contain" class="sbsDiv">
+                    Change Password:
+                    <fieldset class="ui-grid-a sideByside">
+                        <div class="ui-block-a">
+                            <fieldset data-role="ui-field-contain">
+                                <label for="changePassword"></label>
+                                <input type="password" name="changePassword" value="" id="changePassword" placeholder="New">
+                            </fieldset>
+                        </div>
+                        <div class="ui-block-b">
+                            <fieldset data-role="ui-field-contain">
+                                <label for="confirmPassword"></label>
+                                <input type="password" name="confirmPassword" value="" id="confirmPassword" placeholder="Confirm">
+                            </fieldset>
+                        </div>
+                    </fieldset>
+                </div>
+                <div data-role="ui-field-contain">
+                    <div data-role="ui-field-contain">
+                        <label for="gender">Gender:</label>
+                        <fieldset data-role="controlgroup" data-type="horizontal" data-mini="false" id="gender">
+                            <label for="male" id="lblMale">&nbsp&nbspMale&nbsp&nbsp</label>
+                            <input type="radio" name="gender" id="male" value="male" />
+                            <label for="female" id="lblFemale">Female</label>
+                            <input type="radio" name="gender" id="female" value="female" />
+                        </fieldset>
+                    </div>
+                    <div data-role="ui-field-contain">
+                        <label for="bodyType">Body Type:</label>
+                        <fieldset data-role="controlgroup">
+                            <select name="bodyType" id="bodyType" data-iconpos="left" data-mini="false" data-native-menu="false" required>
+                            <option selected="selected">Select Body Type</option>
+                            <option value="underweight">Underweight</option>
+                            <option value="lean">Lean</option>
+                            <option value="athletic">Athletic</option>
+                            <option value="average">Average</option>
+                            <option value="chunky">Chunky</option>
+                            <option value="plump">Plump</option>
+                            <option value="overweight">Overweight</option>
+                        </select>
+                        </fieldset>
+                    </div>
+                    <div data-role="ui-field-contain" class="sbsDiv">
+                        Height:
+                        <fieldset class="ui-grid-a sideByside">
+                            <div class="ui-block-a">
+                                <fieldset data-role="ui-field-contain">
+                                    <label for="heightFt"></label>
+                                    <input type="number" placeholder="Feet" name="heightFt" data-mini="false" data-inline="true" id="heightFt" value="" required min="0" max="9">
+                                </fieldset>
+                            </div>
+                            <div class="ui-block-b">
+                                <fieldset data-role="ui-field-contain">
+                                    <label for="heightIn"></label>
+                                    <input type="number" placeholder="Inches" name="heightIn" data-mini="false" data-inline="true" id="heightIn" value="" required min="0" max="11">
+                                </fieldset>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+
+                <input type="reset" form="frmUserForm" class="reset" data-inline="true" data-iconpos="left" data-icon="refresh" value="Reset" />
+                <input type="submit" id="btnUserUpdate" data-icon="check" data-iconpos="right" value="Create" data-inline="true">
+            </form>
+            <a href="#pageDialog" data-role="button" data-icon="delete" data-transition="flip" id="btnDelUser">Delete User</a>
+        </div>
+    </div>
+
+    <!-- Menu Page  -->
+    <div data-role="page" data-theme="b" id="pageMenu">
+        <div data-role="header">
+            <a href="#pageHome" data-role="button" data-icon="lock" data-inconpos="left" data-inline="true">Lock</a>
+            <a href="#pageAbout" data-role="button" data-icon="info" data-inconpos="right" data-inline="true">Info</a>
+            <h1>HealMon</h1>
+        </div>
+        <div data-role="content">
+            <div data-role="controlgroup">
+                <a href="#pageSpecs" data-role="button">Specs</a>
+                <a href="#pageUserInfo" data-role="button">User Info</a>
+                <a href="#pageSync" data-role="button">Sync</a>
+                <a href="#pageRecords" data-role="button">View Entries</a>
+            </div>
+            <div data-role="controlgroup">
+                <div data-role="collapsible">
+                    <h3>Analysis</h3>
+                    <a href="#pageBmiGraph" data-role="button">BMI Graph</a>
+                    <a href="#pageBpGraph" data-role="button">BP Graph</a>
+                    <a href="#pageAdvice" data-role="button">Recommendations</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Records Page -->
+    <div data-role="page" data-theme="b" id="pageRecords">
+        <div data-role="header">
+            <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+            <a href="#pageAbout" data-role="button" data-icon="info" data-iconpos="right" data-inline="true">Info</a>
+            <h1>History</h1>
+        </div>
+        <div data-role="content">
+            <!-- User's Information Section -->
+            <div data-role="ui-field-contain" id="divUserSection">
+            </div>
+            <hr>
+            <h3 align="center">Past Entries</h3>
+            <hr>
+            <div data-role="ui-field-contain">
+                <!-- Records Table -->
+                <table id="tblRecords" data-role="table" class="ui-responsive table-stroke">
+                </table>
+            </div>
+            <div data-role="ui-field-contain">
+                <a href="#pageNewRecordForm" id="btnAddRecord" data-role="button" data-icon="plus">Add New Entry</a>
+                <a href="#" data-role="button" id="btnClearHistory" data-icon="delete">Clear History</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Record Form Page -->
+    <div data-role="page" data-theme="b" id="pageNewRecordForm">
+        <div data-role="header">
+            <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+            <a href="#pageAbout" data-role="button" data-icon="info" data-iconpos="right" data-inline="true">Info</a>
+            <h1 id="entryHeader">New Entry</h1>
+        </div>
+        <div data-role="content">
+            <form id="frmNewRecordForm" action="">
+                <div data-role="ui-field-contain">
+                    <div data-role="ui-field-contain">
+                        <label for="datExamDate">Date: </label>
+                        <input type="date" name="datExamDate" data-mini="false" id="datExamDate" value="" required>
+                    </div>
+                    <div data-role="ui-field-contain">
+                        <label for="txtWeight">Weight: </label>
+                        <input type="number" step="0.1" placeholder="Required" name="txtWeight" data-mini="false" id="txtWeight" value="" required>
+                    </div>
+                    <div data-role="ui-field-contain">
+                        <label for="sys">
+                        <abbr title="Millimeters of Mercury">Systolic BP (mmHg): </abbr>
+                    </label>
+                        <input type="number" placeholder="Not Required" name="sys" data-mini="false" id="sys" value="">
+                    </div>
+                    <div data-role="ui-field-contain">
+                        <label for="dia">
+                        <abbr title="Millimeters of Mercury">Diastolic BP (mmHg): </abbr>
+                    </label>
+                        <input type="number" placeholder="Not Required" name="dia" data-mini="false" id="dia" value="">
+                    </div>
+                </div>
+                <input type="submit" id="btnSubmitRecord" value="Add" data-icon="plus">
+                <input type="reset" form="frmNewRecordForm" class="reset" data-icon="refresh" value="Clear Info" />
+                <a href="#pageRecords" data-role="button" data-icon="back">View Entries</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- BMI Graph Page -->
+    <div data-role="page" data-theme="b" id="pageBmiGraph">
+        <div data-role="header">
+            <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+            <a href="#" class="refresh" data-role="button" data-icon="refresh" data-iconpos="right" data-inline="true">Refresh</a>
+            <h1>Analyze</h1>
+        </div>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Body Mass Index</h3>
+            </div>
+            <div class="panel-body">
+                <div id="GraphCanvasBmi" class="graphCanvas"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BP Graph Page -->
+    <div data-role="page" data-theme="b" id="pageBpGraph">
+        <div data-role="header">
+            <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+            <a href="#" class="refresh" data-role="button" data-icon="refresh" data-iconpos="right" data-inline="true">Refresh</a>
+            <h1>Analyze</h1>
+        </div>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Blood Pressure</h3>
+            </div>
+            <div class="panel-body">
+                <div id="GraphCanvasBp" class="graphCanvas">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Suggestions Page -->
+    <div data-role="page" data-theme="b" id="pageAdvice">
+        <div data-role="header">
+            <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+            <a href="#pageAbout" data-role="button" data-icon="info" data-iconpos="right" data-inline="true">Info</a>
+            <h1>Suggestions</h1>
+        </div>
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title" id="adviceHeader"></h3>
+            </div>
+            <div class="panel-body">
+                <canvas id="AdviceCanvas" width="550" height="550" class="graphCanvas">
+                    </canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Specifications Page -->
+    <div data-role="page" data-theme="b" id="pageSpecs">
+        <div data-role="header">
+            <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+            <a href="#pageAbout" data-role="button" data-icon="info" data-iconpos="right" data-inline="true">Info</a>
+            <h1>Specs</h1>
+        </div>
+        <div data-role="content">
+            Casey Murphy<br> CS321 - Mobile Apps<br>
+
+            <h3>Assignment 9: Health Monitoring App - MySQL Storage</h3>
+            <hr>
+            <p>
+                Continue to build on the last chapter's application, that will monitor both blood pressure and body mass index (you can model it on the Thyroid app).
+            </p>
+            <p>Implement the following:</p>
+            <ul>
+                <li>A password-based entry page</li>
+                <li>A page to get basic information about the person (name, dob, health insurance info, and a password reset)
+                </li>
+                <li>A menu page with options and submenus
+                    <ul>
+                        <li>Blood Pressure
+                            <ul>
+                                <li>Enter new data about your blood pressure</li>
+                                <li>Update data about your blood pressure</li>
+                                <li>A graph of the blood pressure data entered so far</li>
+                                <li>A recommendations page to make recommendations based on the values of your blood pressure</li>
+                            </ul>
+                        </li>
+                        <li>BMI
+                            <ul>
+                                <li>Enter new data about your height and weight</li>
+                                <li>Update data about our BMI</li>
+                                <li>A graph of your height, weight, and BMI</li>
+                                <li>A recommendations page to make recommendations based on the values of your BMI</li>
+                            </ul>
+                        </li>
+                        <li>User Settings
+                            <ul>
+                                <li>Update personal information</li>
+                                <li>Change graph type for BP and BMI</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <hr>
+            <h3>ChangeLog:</h3>
+            <p>Chapter 5 - Basic Layout, no dynamic functionality except navigation</p>
+            <p>Chapter 6 - JavaScript behavior and logic added, local storage added</p>
+            <p>Chapter 7 - Graphics and Canvas</p>
+            <p>Chapter 8 - Session Storage, basic DB funtionality</p>
+            <p>Chapter 9 - MongoDB Storage</p>
+        </div>
+    </div>
+
+     <!-- Sync Page  -->
+    <div data-role="page" data-theme="b" id="pageSync">
+        <div data-role="header">
+            <a href="#pageMenu" data-role="button" data-icon="bars" data-iconpos="left" data-inline="true">Menu</a>
+            <a href="#pageAbout" data-role="button" data-icon="info" data-iconpos="right" data-inline="true">Info</a>
+            <h1>Sync Account Information</h1>
+        </div>
+        <div data-role="content">
+            <div data-role="controlgroup">
+                <a id="btnUpload" data-role="button">Upload Records</a>
+                <a id="btnDownload" data-role="button">Download Records (No Overwrite)</a>
+                <a id="btnDownloadOverwrite" data-role="button">Download Records (Overwrite Local Data)</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog Page  -->
+    <div data-role="page" data-theme="b" id="pageDialog" data-dialog="true" data-close-btn="none">
+        <div class="panel">
+            <div class="panel-heading">Are you sure? </div>
+            <a href="#pageHome" data-role="button" data-transition="flip" onclick="delUser()">Yes</a>
+            <a href="#pageUserInfo" data-role="button" data-transition="flip">No</a>
+        </div>
+    </div>
+
+     <!-- Map Page  -->
+    <div data-role="page" data-theme="b" id="pageMap">
+      
+    </div>
+
+
+    <!--Graphs -->
+    <script src="assets/libs/RGraph.common.core.js"></script>
+    <script src="assets/libs/RGraph.common.dynamic.js"></script>
+    <script src="assets/libs/RGraph.meter.js"></script>
+    <script src="assets/libs/RGraph.svg.common.core.js"></script>
+    <script src="assets/libs/RGraph.svg.line.js"></script>
+
+    <!--Custom JS/jQuery -->
+    <script src="assets/js/index.js"></script>
+    <script src="assets/js/pageLoader.js"></script>
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/userForm.js"></script>
+    <script src="assets/js/table.js"></script>
+    <script src="assets/js/advice.js"></script>
+    <script src="assets/js/sync.js"></script>
+    <script src="assets/js/graphAnimateBmi.js"></script>
+    <script src="assets/js/graphAnimateBp.js"></script>
+
+</body>
+
+</html>
