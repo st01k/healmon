@@ -1,5 +1,5 @@
 {
-  "name": "ch9",
+  "name": "health monitor",
   "version": "1.0.0",
   "description": "mobile apps - mongodb",
   "main": "app-server.js",
