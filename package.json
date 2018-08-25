@@ -1,5 +1,5 @@
 {
-  "name": "health monitor",
+  "name": "healmon",
   "version": "1.0.0",
   "description": "mobile apps - mongodb",
   "main": "app-server.js",
